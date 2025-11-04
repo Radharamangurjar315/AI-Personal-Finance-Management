@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const { TRANSACTION_TYPES, TRANSACTION_SOURCES } = require('../constants');
 
 const transactionSchema = new mongoose.Schema({
   userId: {
@@ -8,7 +9,7 @@ const transactionSchema = new mongoose.Schema({
   },
   type: {
     type: String,
-    enum: ['income', 'expense'],
+    enum: Object.values(TRANSACTION_TYPES),
     required: true
   },
   category: {
@@ -30,8 +31,8 @@ const transactionSchema = new mongoose.Schema({
   tags: [String],
   source: {
     type: String,
-    enum: ['manual', 'bank', 'email'],
-    default: 'manual'
+    enum: Object.values(TRANSACTION_SOURCES),
+    default: TRANSACTION_SOURCES.MANUAL
   }
 });
 

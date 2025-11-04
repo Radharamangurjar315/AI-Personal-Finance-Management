@@ -54,10 +54,12 @@ router.post('/generate', authMiddleware, async (req, res) => {
       monthlyExpenses[month] = (monthlyExpenses[month] || 0) + t.amount;
     });
 
-    const avgExpense = Object.values(monthlyExpenses).reduce((a, b) => a + b, 0) / 
-                       (Object.keys(monthlyExpenses).length || 1);
+    const monthCount = Object.keys(monthlyExpenses).length;
+    const avgExpense = monthCount > 0 
+      ? Object.values(monthlyExpenses).reduce((a, b) => a + b, 0) / monthCount
+      : 0;
 
-    // Challenge 1: Reduce spending by 10%
+    // Challenge 1: Reduce spending by 10% (only if user has expense history)
     if (avgExpense > 0) {
       const endDate = new Date();
       endDate.setDate(endDate.getDate() + 30);

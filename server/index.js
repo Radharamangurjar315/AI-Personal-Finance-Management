@@ -32,11 +32,13 @@ app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(mongoSanitize()); // Sanitize user input to prevent injection attacks
-app.use('/api/', limiter); // Apply rate limiting to all API routes
-app.use('/api/auth', authLimiter); // Apply stricter rate limiting to auth routes
 
 // Serve static files from client/public
 app.use(express.static(path.join(__dirname, '../client/public')));
+
+// Apply rate limiting - auth limiter first (more restrictive)
+app.use('/api/auth', authLimiter);
+app.use('/api/', limiter); // Apply rate limiting to all other API routes
 
 // Database connection
 const MONGODB_URI = process.env.MONGODB_URI || 'mongodb://localhost:27017/finance-app';

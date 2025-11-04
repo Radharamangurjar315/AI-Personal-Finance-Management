@@ -563,11 +563,21 @@ async function handleGenerateChallenges() {
 
 async function handleUpdateChallengeProgress(id) {
     const challenge = state.challenges.find(c => c._id === id);
+    
+    if (!challenge) {
+        alert('Challenge not found');
+        return;
+    }
+    
     const newValue = prompt(`Enter new progress value (current: ${challenge.current}, target: ${challenge.target}):`);
     
     if (newValue !== null) {
         try {
             const current = parseFloat(newValue);
+            if (isNaN(current) || current < 0) {
+                alert('Please enter a valid positive number');
+                return;
+            }
             await updateChallenge(id, { current });
             renderApp();
         } catch (error) {

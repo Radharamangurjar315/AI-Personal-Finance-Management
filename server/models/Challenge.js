@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const { CHALLENGE_TYPES, CHALLENGE_STATUS, POINTS } = require('../constants');
 
 const challengeSchema = new mongoose.Schema({
   userId: {
@@ -16,7 +17,7 @@ const challengeSchema = new mongoose.Schema({
   },
   type: {
     type: String,
-    enum: ['savings', 'spending', 'income', 'streak'],
+    enum: Object.values(CHALLENGE_TYPES),
     required: true
   },
   target: {
@@ -29,12 +30,12 @@ const challengeSchema = new mongoose.Schema({
   },
   points: {
     type: Number,
-    default: 50
+    default: POINTS.CHALLENGE_BASE
   },
   status: {
     type: String,
-    enum: ['active', 'completed', 'failed'],
-    default: 'active'
+    enum: Object.values(CHALLENGE_STATUS),
+    default: CHALLENGE_STATUS.ACTIVE
   },
   startDate: {
     type: Date,
