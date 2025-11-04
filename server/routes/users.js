@@ -1,6 +1,7 @@
 const express = require('express');
 const User = require('../models/User');
 const authMiddleware = require('../middleware/auth');
+const { POINTS } = require('../constants');
 
 const router = express.Router();
 
@@ -63,7 +64,7 @@ router.post('/badge', authMiddleware, async (req, res) => {
       earnedAt: new Date()
     });
 
-    user.points += 100; // Award points for badge
+    user.points += POINTS.BADGE_EARNED;
     await user.save();
 
     res.json(user.badges);

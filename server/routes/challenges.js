@@ -3,6 +3,7 @@ const Challenge = require('../models/Challenge');
 const User = require('../models/User');
 const Transaction = require('../models/Transaction');
 const authMiddleware = require('../middleware/auth');
+const { POINTS } = require('../constants');
 
 const router = express.Router();
 
@@ -131,7 +132,7 @@ router.put('/:id', authMiddleware, async (req, res) => {
       user.points += challenge.points;
       
       // Level up logic
-      const newLevel = Math.floor(user.points / 500) + 1;
+      const newLevel = Math.floor(user.points / POINTS.LEVEL_THRESHOLD) + 1;
       if (newLevel > user.level) {
         user.level = newLevel;
       }

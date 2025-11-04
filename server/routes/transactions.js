@@ -2,6 +2,7 @@ const express = require('express');
 const Transaction = require('../models/Transaction');
 const User = require('../models/User');
 const authMiddleware = require('../middleware/auth');
+const { POINTS } = require('../constants');
 
 const router = express.Router();
 
@@ -47,7 +48,7 @@ router.post('/', authMiddleware, async (req, res) => {
 
     // Award points for logging transaction
     const user = await User.findById(req.userId);
-    user.points += 5;
+    user.points += POINTS.TRANSACTION_LOG;
     await user.save();
 
     res.status(201).json(transaction);
@@ -104,9 +105,19 @@ router.get('/analytics', authMiddleware, async (req, res) => {
 // Update transaction
 router.put('/:id', authMiddleware, async (req, res) => {
   try {
+    const { type, category, amount, description, tags } = req.body;
+    
+    // Only allow specific fields to be updated
+    const updateData = {};
+    if (type) updateData.type = type;
+    if (category) updateData.category = category;
+    if (amount) updateData.amount = amount;
+    if (description !== undefined) updateData.description = description;
+    if (tags) updateData.tags = tags;
+    
     const transaction = await Transaction.findOneAndUpdate(
       { _id: req.params.id, userId: req.userId },
-      req.body,
+      updateData,
       { new: true }
     );
 
