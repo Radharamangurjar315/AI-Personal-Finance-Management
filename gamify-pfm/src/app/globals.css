@@ -1,0 +1,20 @@
+@import "tailwindcss";
+
+@theme inline {
+  --color-bg-from: #3b82f6; /* blue-500 */
+  --color-bg-to: #ec4899;   /* pink-500 */
+}
+
+body {
+  background-image: linear-gradient(
+    to bottom right,
+    var(--color-bg-from),
+    var(--color-bg-to)
+  );
+  color: white;
+  font-family: system-ui, sans-serif;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+}
