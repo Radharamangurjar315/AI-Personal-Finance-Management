@@ -151,7 +151,7 @@ class GamificationService {
    */
   calculateRank(user, allUsers) {
     const sortedUsers = allUsers
-      .filter(u => u.privacySettings.showOnLeaderboard)
+      .filter(u => u.privacySettings && u.privacySettings.showOnLeaderboard)
       .sort((a, b) => b.points - a.points);
     
     const rank = sortedUsers.findIndex(u => u.id === user.id) + 1;
@@ -167,7 +167,7 @@ class GamificationService {
    */
   getLeaderboard(allUsers, limit = 10) {
     return allUsers
-      .filter(u => u.privacySettings.showOnLeaderboard)
+      .filter(u => u.privacySettings && u.privacySettings.showOnLeaderboard)
       .sort((a, b) => b.points - a.points)
       .slice(0, limit)
       .map((user, index) => ({

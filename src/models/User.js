@@ -1,5 +1,8 @@
 const { v4: uuidv4 } = require('uuid');
 
+// Constants
+const POINTS_PER_LEVEL = 1000;
+
 /**
  * User Model
  * Represents a user in the finance management system
@@ -50,7 +53,7 @@ class User {
   }
 
   checkLevelUp() {
-    const newLevel = Math.floor(this.points / 1000) + 1;
+    const newLevel = Math.floor(this.points / POINTS_PER_LEVEL) + 1;
     if (newLevel > this.level) {
       this.level = newLevel;
       return true;

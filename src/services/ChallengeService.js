@@ -208,7 +208,9 @@ class ChallengeService {
     switch (challenge.type) {
       case 'savings':
         // Calculate savings (would need income data)
-        const totalIncome = user.income.reduce((sum, i) => sum + i.amount, 0);
+        const totalIncome = Array.isArray(user.income) 
+          ? user.income.reduce((sum, i) => sum + i.amount, 0)
+          : 0;
         const totalSpending = transactions.reduce((sum, t) => sum + t.amount, 0);
         const savings = totalIncome - totalSpending;
         challenge.updateProgress(savings);
@@ -220,12 +222,7 @@ class ChallengeService {
         const spendingInPeriod = spendingAnalysisService.calculateTotalSpending(
           transactions, startDate, new Date()
         );
-        // For spending challenges, lower is better, so we check if under target
-        if (spendingInPeriod <= challenge.target) {
-          challenge.updateProgress(challenge.target);
-        } else {
-          challenge.updateProgress(challenge.target - (spendingInPeriod - challenge.target));
-        }
+        this.updateSpendingChallengeProgress(challenge, spendingInPeriod);
         break;
 
       case 'streak':
@@ -240,6 +237,18 @@ class ChallengeService {
     }
 
     return challenge;
+  }
+
+  /**
+   * Update spending challenge progress
+   * For spending challenges, lower is better - updates progress based on staying under target
+   */
+  updateSpendingChallengeProgress(challenge, spendingInPeriod) {
+    if (spendingInPeriod <= challenge.target) {
+      challenge.updateProgress(challenge.target);
+    } else {
+      challenge.updateProgress(challenge.target - (spendingInPeriod - challenge.target));
+    }
   }
 
   /**

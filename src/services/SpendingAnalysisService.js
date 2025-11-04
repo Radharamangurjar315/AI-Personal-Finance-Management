@@ -73,7 +73,9 @@ class SpendingAnalysisService {
         transactions, category, twoMonthsAgo, lastMonth
       );
 
-      const change = ((recentSpending - previousSpending) / previousSpending) * 100;
+      const change = previousSpending > 0 
+        ? ((recentSpending - previousSpending) / previousSpending) * 100
+        : 0;
 
       if (change > 10) {
         trends.increasing.push({ category, change: change.toFixed(2) });
