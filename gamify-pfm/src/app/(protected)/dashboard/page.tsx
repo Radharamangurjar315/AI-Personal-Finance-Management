@@ -5,7 +5,8 @@ import DashboardHeader from "@/components/dashboard/DashboardHeader";
 import StatCard from "@/components/dashboard/StatCard";
 import ProgressBar from "@/components/dashboard/ProgressBar";
 import TransactionList from "@/components/dashboard/TransactionList";
-import ChartPlaceholder from "@/components/dashboard/ChartPlaceholder";
+// import ChartPlaceholder from "@/components/dashboard/ChartPlaceholder";
+import AnalyticsChart from "@/components/dashboard/AnalyticsChart";
 
 export default function DashboardPage() {
   const [transactions, setTransactions] = useState<any[]>([]);
@@ -73,9 +74,10 @@ const data = await res.json();
           </p>
         </section>
 
-        <section className="bg-white/10 backdrop-blur-lg rounded-2xl p-6 shadow-lg">
-          <ChartPlaceholder />
+        <section>
+          <AnalyticsChart transactions={transactions} />
         </section>
+
 
         <section className="bg-white/10 backdrop-blur-lg rounded-2xl p-6 shadow-lg">
           <TransactionList transactions={transactions} />
