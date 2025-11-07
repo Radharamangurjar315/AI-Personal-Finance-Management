@@ -27,7 +27,7 @@ export async function POST(req: Request) {
       {
         success: true,
         message: "User registered successfully",
-        user: { id: newUser._id, email: newUser.email },
+        user: { userId: newUser._id, email: newUser.email },
       },
       { status: 201 }
     );
