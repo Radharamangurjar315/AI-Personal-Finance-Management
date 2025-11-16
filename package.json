@@ -1,0 +1,30 @@
+{
+  "name": "ai-personal-finance-management",
+  "version": "1.0.0",
+  "description": "AI-powered personal finance management with gamification",
+  "main": "src/index.js",
+  "scripts": {
+    "start": "node src/index.js",
+    "dev": "nodemon src/index.js",
+    "test": "jest --coverage",
+    "lint": "eslint src/**/*.js",
+    "demo": "node demo.js"
+  },
+  "keywords": [
+    "finance",
+    "gamification",
+    "ai",
+    "budgeting"
+  ],
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "express": "^4.18.2",
+    "uuid": "^9.0.0"
+  },
+  "devDependencies": {
+    "jest": "^29.5.0",
+    "nodemon": "^3.0.1",
+    "eslint": "^8.45.0"
+  }
+}
